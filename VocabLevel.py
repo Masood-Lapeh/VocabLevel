@@ -69,7 +69,9 @@ else:
             csv_out.writerow(row)
             
 # interact with user to find his/her vocabulary level
-start = 0
+
+# Previous way:
+"""start = 0
 end = len(sorted_words)-1
 while start <= end:
     pos = int((start+end)/2)
@@ -78,7 +80,27 @@ while start <= end:
         end = pos - 1
         pos -= 1 # position of the last word that you know
     else:
-        start = pos + 1
+        start = pos + 1"""
+
+# New way:
+start = 0
+end = len(sorted_words)-1
+while start <= end:
+    pos = int((start+end)/2)
+    print('Do you know the meaning of "%s" (y,n)?' % sorted_words[pos][0])
+    print end, pos, start
+    if raw_input()=='n':
+        if end - start < 100:
+            end = pos - 1
+        else:
+            end = start + 9*(end - start)/10 - 1
+        pos -= 1
+    else:
+        if end - start < 100:
+            start = pos + 1
+        else:
+            start = start + (end - start)/10 + 1
+
 # pos: the position where the user does not knows its meaning and the meaning of the words after that
 
 total = len(sorted_words)
